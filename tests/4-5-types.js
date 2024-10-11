@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: LicenseRef-w3c-3-clause-bsd-license-2008 OR LicenseRef-w3c-test-suite-license-2023
  */
 
-import {addPerTestMetadata, setupMatrix} from './helpers.js';
+import * as allure from 'allure-js-commons';
+import {addJsonAttachment, addPerTestMetadata, setupMatrix} from './helpers.js';
 import assert from 'node:assert/strict';
 import chai from 'chai';
+import {ContentType} from 'allure-js-commons';
 import {createLocalVp} from './data-generator.js';
 import {createRequire} from 'module';
 import {filterByTag} from 'vc-test-suite-implementations';
@@ -32,6 +34,10 @@ describe('Types', function() {
       it('Verifiable credentials MUST contain a type property with an ' +
         'associated value.', async function() {
         this.test.link = `https://w3c.github.io/vc-data-model/#types:~:text=Verifiable%20credentials%20and%20verifiable%20presentations%20MUST%20contain%20a%20type%20property%20with%20an%20associated%20value.`;
+        await addJsonAttachment(
+          'credential-no-type-fail.json',
+          require('./input/credential-no-type-fail.json')
+        );
         await assert.rejects(
           endpoints.issue(require('./input/credential-no-type-fail.json')),
           {name: 'HTTPError'},
