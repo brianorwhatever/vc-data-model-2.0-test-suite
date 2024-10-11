@@ -43,7 +43,7 @@ export async function addJsonAttachment(fileName, content) {
   // append test meta data to the it/test this.
   await allure.attachment(
     fileName,
-    content,
+    JSON.stringify(content),
     ContentType.JSON
   );
 }
